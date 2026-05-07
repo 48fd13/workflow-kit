@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import importlib.util
 import re
 import sys
 from pathlib import Path
@@ -7,6 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / ".opencode" / "opencode.json"
+BUILD_CONFIG_PATH = ROOT / ".opencode" / "scripts" / "build-config.py"
+SOURCE_CONFIG_PATH = ROOT / ".opencode" / "config" / "base.json"
+PERMISSIONS_DIR = ROOT / ".opencode" / "config" / "permissions"
 
 BASH_PROFILE_AGENTS = [
     "general",
@@ -296,6 +300,18 @@ def load_config(path: Path) -> dict:
         raise RuntimeError(f"failed to parse {path.name}: {exc}")
 
 
+def build_generated_config() -> dict:
+    try:
+        spec = importlib.util.spec_from_file_location("opencode_build_config", BUILD_CONFIG_PATH)
+        if spec is None or spec.loader is None:
+            raise RuntimeError("failed to load build-config.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.build_config()
+    except Exception as exc:
+        raise RuntimeError(f"failed to build generated config from source: {exc}")
+
+
 def extract_prompt_paths(value) -> list[str]:
     paths: list[str] = []
     if isinstance(value, dict):
@@ -329,6 +345,15 @@ def main() -> int:
 
     required_paths = [
         CONFIG_PATH,
+        BUILD_CONFIG_PATH,
+        SOURCE_CONFIG_PATH,
+        PERMISSIONS_DIR / "agents.json",
+        PERMISSIONS_DIR / "bash-readonly.json",
+        PERMISSIONS_DIR / "bash-validation.json",
+        PERMISSIONS_DIR / "bash-risky-ask.json",
+        PERMISSIONS_DIR / "bash-shell-risky-ask.json",
+        PERMISSIONS_DIR / "bash-destructive-deny.json",
+        ROOT / ".opencode" / "config" / "README.md",
         ROOT / "AGENTS.md",
         ROOT / ".opencode" / "agents",
         ROOT / ".opencode" / "skills",
@@ -350,6 +375,9 @@ def main() -> int:
     if config_path.exists():
         try:
             config = load_config(config_path)
+            generated_config = build_generated_config()
+            if generated_config != config:
+                errors.append(".opencode/opencode.json is stale; run python3 .opencode/scripts/build-config.py")
             if config.get("model") != "ollama/gemma4:e2b":
                 errors.append("model must be ollama/gemma4:e2b")
             if config.get("default_agent") != "general":

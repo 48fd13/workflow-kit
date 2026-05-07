@@ -185,6 +185,11 @@
 			"prompt": "{file:agents/general.md}",
 			"permission": {
 				"edit": "allow",
+				"question": "allow",
+				"task": {
+					"*": "deny",
+					"explore": "allow"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -396,11 +401,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"question": "allow",
-				"task": {
-					"*": "deny",
-					"explore": "allow"
 				}
 			},
 			"tools": {
@@ -419,6 +419,12 @@
 			"prompt": "{file:agents/standard/standard.md}",
 			"permission": {
 				"edit": "deny",
+				"question": "allow",
+				"task": {
+					"*": "deny",
+					"explore": "allow",
+					"standard-executor": "allow"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -566,12 +572,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"question": "allow",
-				"task": {
-					"*": "deny",
-					"explore": "allow",
-					"standard-executor": "allow"
 				}
 			},
 			"tools": {
@@ -591,6 +591,10 @@
 			"prompt": "{file:agents/standard/executor.md}",
 			"permission": {
 				"edit": "allow",
+				"question": "allow",
+				"task": {
+					"*": "deny"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -802,10 +806,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"question": "allow",
-				"task": {
-					"*": "deny"
 				}
 			},
 			"tools": {
@@ -825,6 +825,11 @@
 			"permission": {
 				"edit": "deny",
 				"question": "allow",
+				"task": {
+					"*": "deny",
+					"explore": "allow",
+					"auto-executor": "allow"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -972,11 +977,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"task": {
-					"*": "deny",
-					"explore": "allow",
-					"auto-executor": "allow"
 				}
 			},
 			"tools": {
@@ -997,6 +997,9 @@
 			"permission": {
 				"edit": "allow",
 				"question": "allow",
+				"task": {
+					"*": "deny"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -1208,9 +1211,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"task": {
-					"*": "deny"
 				}
 			},
 			"tools": {
@@ -1400,6 +1400,9 @@
 			"prompt": "{file:agents/code-reviewer.md}",
 			"permission": {
 				"edit": "deny",
+				"task": {
+					"*": "deny"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -1547,9 +1550,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"task": {
-					"*": "deny"
 				}
 			},
 			"tools": {
@@ -1568,6 +1568,9 @@
 			"prompt": "{file:agents/security-auditor.md}",
 			"permission": {
 				"edit": "deny",
+				"task": {
+					"*": "deny"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -1715,9 +1718,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"task": {
-					"*": "deny"
 				}
 			},
 			"tools": {
@@ -1736,6 +1736,9 @@
 			"prompt": "{file:agents/performance-analyzer.md}",
 			"permission": {
 				"edit": "deny",
+				"task": {
+					"*": "deny"
+				},
 				"bash": {
 					"*": "ask",
 					"npm install*": "ask",
@@ -1883,9 +1886,6 @@
 					"git clean*": "deny",
 					"git branch -D *": "deny",
 					"git branch -D*": "deny"
-				},
-				"task": {
-					"*": "deny"
 				}
 			},
 			"tools": {

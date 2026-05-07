@@ -17,6 +17,8 @@ It provides a default safe standalone `general` agent, optional explicit `standa
   - read-only helper: `explore`
   - optional manual specialists: `code-reviewer`, `security-auditor`, `performance-analyzer`
 - `.opencode/skills/` — bundled, loadable skills (`repo-bootstrap`)
+- `.opencode/config/` — source config and permission profiles used to generate `opencode.json`
+- `.opencode/scripts/` — config generation helpers
 
 ## Lane model (core workflow)
 
@@ -77,6 +79,24 @@ Docs-writing and local operations responsibilities are merged into executors. Co
 - OpenCode discovers skills by convention from `.opencode/skills/<skill-name>/SKILL.md`.
 - No `.opencode/opencode.json` setting is needed for a skills directory path.
 - Run `python3 verify-opencode-setup.py` after copying to validate required paths.
+
+## Global OpenCode setup
+
+Install this repo's OpenCode config into your user config with symlinks:
+
+```sh
+cd ~/workspace/agents && ./setup.sh
+```
+
+To target a different config directory:
+
+```sh
+OPENCODE_CONFIG_DIR=/path/to/opencode ./setup.sh
+```
+
+The setup script links only the selected `.opencode` entries (`opencode.json`,
+`agents/`, `skills/`, `config/`, and `scripts/`) and backs up conflicting
+destination files or directories before replacing them with symlinks.
 
 ## How to use this in another repo
 
